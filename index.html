@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play The Elder Scrolls: Arena</title>
-    <script src="https://js-dos.com/cdn/js-dos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@js-dos/js-dos@6.22.26/js-dos.js"></script>
     <style>
         body { text-align: center; background: #000; color: #fff; }
         #dosbox { width: 80vw; height: 60vh; margin: auto; }
@@ -15,13 +15,10 @@
     <div id="dosbox"></div>
     <script>
         (async () => {
-            const dosbox = await Dos(document.getElementById("dosbox")).run("https://flintcitytimes.github.io/Arena/arena.ZIP", {
-                onload: (fs, main) => {
-                    fs.extract("arena.zip").then(() => {
-                        main(["ARENA.BAT"]); // Run ARENA.BAT after extraction
-                    });
-                },
-                cycles: 12000 // Adjust CPU cycles for smooth gameplay
+            let dos = await Dos(document.getElementById("dosbox")).run("https://flintcitytimes.github.io/Arena/arena.ZIP");
+    
+            dos.fs.extract("arena.ZIP").then(() => {
+                dos.main(["ARENA.BAT"]); // Run the game
             });
         })();
     </script>
