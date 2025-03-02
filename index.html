@@ -15,13 +15,13 @@
     <h1>Play The Elder Scrolls: Arena</h1>
     <div id="dosbox"></div>
     <script>
-        (async () => {
+        async () => {
             let dos = await Dos(document.getElementById("dosbox")).run("https://flintcitytimes.github.io/Arena/arena.ZIP");
     
             dos.fs.extract("arena.ZIP").then(() => {
                 dos.main(["ARENA.BAT"]); // Run the game
             });
-        })();
+        }();
     </script>
 </body>
 </html>
