@@ -15,14 +15,18 @@
     <h1>Play The Elder Scrolls: Arena</h1>
     <div id="dosbox"></div>
     <script>
-        // Wait for the JS-DOS library to load
         document.addEventListener("DOMContentLoaded", async function () {
             try {
-                const dos = await Dos(document.getElementById("dosbox")).run("https://flintcitytimes.github.io/Arena/arena.ZIP");
-                
-                // Extract arena.zip and run ARENA.BAT
-                dos.fs.extract("arena.ZIP").then(() => {
-                    dos.main(["ARENA.BAT"]);
+                const dosbox = await Dos(document.getElementById("dosbox"));
+
+                // Run Arena from your GitHub-hosted ZIP
+                dosbox.run("https://flintcitytimes.github.io/Arena/arena.ZIP", {
+                    // Tell JS-DOS to fetch its WebAssembly files from the official server
+                    wasmPath: "https://js-dos.com/6.22/current/"
+                }).then((dos) => {
+                    dos.fs.extract("arena.ZIP").then(() => {
+                        dos.main(["ARENA.BAT"]); // Run Arena after extraction
+                    });
                 });
             } catch (error) {
                 console.error("Error initializing JS-DOS:", error);
