@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play The Elder Scrolls: Arena</title>
+    <!-- Keeping your working JS-DOS link -->
     <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@js-dos/js-dos@6.22.26/js-dos.css">
+    <link rel="stylesheet" href="https://js-dos.com/6.22/current/js-dos.css">
     <style>
         body { text-align: center; background: #000; color: #fff; }
         #dosbox { width: 80vw; height: 60vh; margin: auto; }
@@ -14,16 +15,15 @@
 <body>
     <h1>Play The Elder Scrolls: Arena</h1>
     <div id="dosbox"></div>
+
     <script>
         document.addEventListener("DOMContentLoaded", async function () {
             try {
+                // Initialize JS-DOS
                 const dosbox = await Dos(document.getElementById("dosbox"));
 
                 // Run Arena from your GitHub-hosted ZIP
-                dosbox.run("https://flintcitytimes.github.io/Arena/arena.ZIP", {
-                    // Tell JS-DOS to fetch its WebAssembly files from the official server
-                    wasmPath: "https://js-dos.com/6.22/current/"
-                }).then((dos) => {
+                dosbox.run("https://flintcitytimes.github.io/Arena/arena.ZIP").then((dos) => {
                     dos.fs.extract("arena.ZIP").then(() => {
                         dos.main(["ARENA.BAT"]); // Run Arena after extraction
                     });
@@ -35,4 +35,3 @@
     </script>
 </body>
 </html>
-
