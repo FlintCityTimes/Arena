@@ -16,25 +16,28 @@
     <h1>Play The Elder Scrolls: Arena</h1>
     <div id="dosbox"></div>
 
-    
-	<script>
-        		function runDOSBox() {
-			Dos(document.getElementById("canvas"), {
-				wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.wasm.js",
-				autolock: true,
-				cycles: 'max',
-			}).ready(function (fs, main) {
-				fs.extract("https://flintcitytimes.github.io/Arena/arena.ZIP").then(function () {
-					main(["-c", 'ARENA.BAT']).then(function (ci) {
-						window.Module = ci.dos;
-						window.ci = ci;
-						DosController.Qwerty(ci.getParentDiv(), ci.getKeyEventConsumer());
-						DosController.Move(ci.getParentDiv(), ci.getKeyEventConsumer());
-					});
-				});
-			});
-		}
-	</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            try {
+                // Initialize DOSBox
+                const dosbox = await Dos(document.getElementById("dosbox"));
+
+                // Run Arena from your GitHub-hosted ZIP
+                dosbox.run("https://flintcitytimes.github.io/Arena/arena.ZIP", {
+                    // Ensure JS-DOS loads wdosbox.wasm.js from its official CDN
+                    env: { 
+                        WASM_URL: "https://js-dos.com/6.22/current/wdosbox.wasm.js"
+                    }
+                }).then((dos) => {
+                    // Extract and Run ARENA.BAT
+                    dos.fs.extract("arena.ZIP").then(() => {
+                        dos.main(["ARENA.BAT"]);
+                    });
+                });
+            } catch (error) {
+                console.error("Error initializing JS-DOS:", error);
+            }
+        });
+    </script>
 </body>
 </html>
-
